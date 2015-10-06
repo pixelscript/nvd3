@@ -23,9 +23,12 @@ nv.models.multiChart = function() {
     // Private Variables
     //------------------------------------------------------------
 
-    var x = d3.scale.linear(),
-        yScale1 = d3.scale.linear(),
+    var yScale1 = d3.scale.linear(),
         yScale2 = d3.scale.linear(),
+
+        xScale = nv.models.xScale(),
+
+        x = d3.time.scale.utc(),
 
         lines1 = nv.models.line().yScale(yScale1),
         lines2 = nv.models.line().yScale(yScale2),
@@ -39,7 +42,7 @@ nv.models.multiChart = function() {
         stack1 = nv.models.stackedArea().yScale(yScale1),
         stack2 = nv.models.stackedArea().yScale(yScale2),
 
-        xAxis = nv.models.axis().scale(x).orient('bottom').tickPadding(5),
+        xAxis = nv.models.axis().scale(xScale?xScale:x).orient('bottom').tickPadding(5),
         yAxis1 = nv.models.axis().scale(yScale1).orient('left'),
         yAxis2 = nv.models.axis().scale(yScale2).orient('right'),
 
@@ -396,6 +399,7 @@ nv.models.multiChart = function() {
     chart.stack1 = stack1;
     chart.stack2 = stack2;
     chart.xAxis = xAxis;
+    chart.xScale = xScale;
     chart.yAxis1 = yAxis1;
     chart.yAxis2 = yAxis2;
     chart.tooltip = tooltip;
